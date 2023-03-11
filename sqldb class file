@@ -1,0 +1,46 @@
+package com.example.newapp;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import androidx.annotation.Nullable;
+
+public class SqlDB extends SQLiteOpenHelper {
+    public SqlDB(@Nullable Context context) {
+        super(context, "shivmdb", null, 1);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL("create table shivtbl (id integer primary key autoincrement, name varchar(100),city varchar(100),country varchar(100));");
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
+    }
+    public void addData(String name,String city,String country){
+        SQLiteDatabase db=getReadableDatabase();
+        db.execSQL("insert into shivtbl(name,city,country) values('"+name+"','"+city+"','"+country+"')");
+    }
+    public Cursor getData(){
+        SQLiteDatabase db=getReadableDatabase();
+        return db.rawQuery("select * from shivtbl",null);
+    }
+    public void del(int id){
+        SQLiteDatabase db=getReadableDatabase();
+        db.execSQL("delete from shivtbl where id="+id);
+    }
+    public  void update(int id,String name,String city,String country){
+        SQLiteDatabase db=getReadableDatabase();
+        db.execSQL("update shivtbl set name='"+name+"',city='"+city+"',country='"+city+"' where id="+id);
+    }
+    public Cursor getDataId(int id){
+        SQLiteDatabase db=getReadableDatabase();
+        return db.rawQuery("select * from shivtbl where id="+id,null);
+    }
+
+}
