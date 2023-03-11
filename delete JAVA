@@ -1,0 +1,32 @@
+package com.example.newapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class delete extends AppCompatActivity {
+    EditText ed1;
+    Button bt1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_delete);
+        ed1=findViewById(R.id.ed1);
+        bt1=findViewById(R.id.bt1);
+
+        SqlDB sdb=new SqlDB(getApplicationContext());
+        bt1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sdb.del(Integer.parseInt(ed1.getText().toString()));
+                Toast t=Toast.makeText(getApplicationContext(),"record delete",Toast.LENGTH_LONG);
+                t.show();
+            }
+        });
+    }
+}
